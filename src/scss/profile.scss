@@ -1,0 +1,69 @@
+ 
+ .profile-logout {
+    margin-top:15px;
+ }
+ 
+ .portfolio-actions {
+     margin-bottom:15px;
+     text-align:right;
+ }
+ .table-actions {
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    padding:3px 8px;
+    &:first-child {
+        margin-right:5px;
+    }
+}
+
+.selected-images {
+    min-height:80px;
+    height:80px;
+    max-height:80px;
+    border:1px solid #ddd;
+    border-radius:5px;
+    margin-top:10px;
+    img {
+        max-height:100%;
+    }
+}
+
+.tags-input-root {
+    width:100%;
+    padding:10px;
+}
+.tags-input input {
+    padding:5px;
+    border-radius:5px;
+    border:1px solid #ced4da;
+}
+.tags-input-badge {
+    margin-right:10px;
+    border:1px solid #ddd;
+    padding:5px 10px;
+    span + i {
+        width:16px;
+        height:16px;
+        display:inline-block;
+        background:#fff;
+        position:relative;
+        top:5px;
+        margin-left:8px;
+        &:before,&:after {
+            content:'';
+            position:absolute;
+            top:50%;
+            left:50%;
+            width:80%;
+            height:1px;
+            background:#000;
+        }
+        &:before {
+            transform:translate(-50%,-50%) rotate(45deg);
+        }
+        &:after {
+            transform:translate(-50%,-50%) rotate(-45deg);
+        }
+    }
+}

@@ -1,0 +1,93 @@
+.login-content {
+    max-width:500px;
+    margin:0 auto;
+    margin-top:70px;
+    padding:30px;
+    padding-top:60px;
+    border-radius:5px;
+    position:relative;
+    border:1px solid #ddd;
+}
+.login-form {
+    width:100%;
+	max-width:500px;
+	margin:0 auto;
+}
+.bg {
+    position:absolute;
+    top:-50px;
+    left:50%;
+    transform:translateX(-50%);
+    background-color:$main-bg;
+    border-radius:0;
+    width:130px;
+    height:100px;
+}
+.login-icon {
+    width:90px;
+    height:90px;
+    margin:0 auto;
+    margin-bottom:25px;
+    background:$primary;
+    border-radius:50%;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    position:absolute;
+    top:-45px;
+    left:50%;
+    transform:translateX(-50%);
+    svg {
+        color:#fff;
+        width:40px;
+        height:40px;
+        margin-right:-10px;
+    }
+}
+.input-group-prepend {
+    .input-group-text {
+        background:$primary;
+        color:#fff;
+        border-color:$primary;
+    }
+}
+.login-btn-wrapper {
+	display:flex;
+	align-items:center;
+	.default-btn {
+        width:100px;
+        color:#fff;
+        border-color:#232323;
+        &:hover {
+            background-color:transparent;
+            color:#232323;
+        }
+    }
+    span {
+		display:inline-block;
+		margin-left:auto;
+		margin-right:5px;
+    }
+    a {
+        text-decoration:underline;
+    }
+}
+label {
+    font-weight:700;
+}
+//registration
+.login-content.registration {
+    max-width:700px;
+}
+.registration-btn-wrapper {
+    max-width:200px;
+    margin:0 auto;
+}
+button.default-btn[disabled='disabled'] {
+    border-color:$disabled;
+    color:$disabled;
+    &:hover {
+        background:transparent;
+        color:$disabled;
+    }
+}

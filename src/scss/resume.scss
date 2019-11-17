@@ -1,0 +1,183 @@
+.site-page {
+    padding: 30px;
+}
+.site-page-title {
+    margin-bottom: 40px;
+}
+.page-title {
+    color: #333333;
+    font-size: 38px;
+    font-weight: 900;
+    font-style: normal;
+    letter-spacing: 1px;
+    margin: 0 0 8px;
+    line-height: 1.5em;
+    &:after {
+        display: block;
+        content: '';
+        width: 100%;
+        margin-top: 5px;
+        height: 2px;
+        background-color: #eeeeee;
+        opacity: 1;
+    }
+}
+.page-description {
+    display: block;
+    margin: 0;
+    color: #888;
+    font-size: 14px;
+    line-height: 1.5em;
+    font-weight: 300;
+    text-align: right;
+}
+
+//timeline
+.block-title {
+    text-align:center;
+    h3 {
+        display: inline-block;
+        margin: 0 0 20px;
+        padding-bottom: 5px;
+        font-size: 15px;
+        font-weight:900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #333333;
+        position:relative;
+        border-bottom: 1px solid $primary;
+        &:before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-10px);
+            border-top: 10px solid $primary;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
+        &:after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -9.3px;
+            transform: translateX(-10px);
+            border-top: 10px solid #fff;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
+    }
+}
+.resume-timeline {
+    margin-bottom: 30px;
+}
+.resume-timeline-item {
+    position: relative;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    padding-bottom: 15px;
+    .left-part {
+        width: 30%;
+        display: table-cell;
+        padding-right: 25px;
+        min-height: 100%;
+        text-align: right;
+        vertical-align: top;
+    }
+    .right-part {
+        width: 70%;
+        display: table-cell;
+        padding-left: 25px;
+        padding-right: 15px;
+        vertical-align: top;
+    }
+    .item-period {
+        margin: 3px 0;
+        font-size: 14px;
+        font-weight:600;
+        line-height: 1.4em;
+    }
+    .item-company {
+        display: block;
+        color: #aaa;
+        margin: 0 0 4px;
+        font-size: 12px;
+        line-height: 1.45em;
+    }
+    .item-position {
+        font-size: 16px;
+        font-weight:600;
+        margin-bottom: 3px;
+    }
+    .item-position-description {
+        font-size: .92em;
+        margin-bottom:5px;
+    }
+    .item-tech-list {
+        font-size:14px;
+        font-weight:500;
+        padding-left:30px;
+    }
+}
+.divider {
+    position: absolute;
+    top: 0;
+    left: 30%;
+    bottom: 0;
+    width: 1px;
+    background-color: #eee;
+    &:after {
+        content: '';
+        display: block;
+        margin-top: 7px;
+        width: 11px;
+        height: 11px;
+        margin-left: -5px;
+        border-radius: 5px;
+        border: 2px solid $primary;
+        background-color: #fff;
+    }
+}
+
+.skill-item {
+    margin-bottom:10px;
+    & + .default-btn {
+        margin-top:25px;
+    }
+}
+.skill-top {
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    margin-bottom:5px;
+}
+.skill-name {
+    font-size:14px;
+    margin: 0px;
+    font-weight:600;
+}
+.skill-percent {
+    display:inline-block;
+    font-size:14px;
+}
+.skill-line {
+    width:100%;
+    background:#ddd;
+    height:5px;
+    border-radius:5px;
+    span {
+        display:block;;
+        height:100%;
+        background:$primary;
+        border-radius:5px;
+    }
+}
+.skill-description {
+    margin:10px 0;
+    p {
+        margin: 0;
+        font-size:14px;
+        font-weight:300;
+    }
+}
