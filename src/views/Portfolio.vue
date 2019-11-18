@@ -22,8 +22,14 @@
 					</li>
 				</ul>
 			</div>
-			<transition-group tag="div" name="animList" class="portfolio-works">
-				<router-link :to="'/portfolio/' + work.id" :name="work.name" class="portfolio-work" v-for="work in filteredWorks" :key="work.id">
+			<transition-group v-if="!loading" tag="div" name="animList" class="portfolio-works">
+				<router-link 
+					:to="'/portfolio/' + work.id" 
+					:name="work.name" 
+					class="portfolio-work" 
+					v-for="work in filteredWorks" 
+					:key="work.id"
+				>
 						<div class="image-block">
 							<img :src="work.imageSrc" :alt="work.name">
 						</div>
@@ -38,6 +44,9 @@
 						</div>
 				</router-link>	
 			</transition-group>
+			<div class="loading" v-else>
+				<b-spinner label="Загрузка"></b-spinner>
+			</div>
 		</div>
 	</div>
 	<div class="loading" v-else>
