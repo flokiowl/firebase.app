@@ -1,11 +1,25 @@
 .mobile-header {
     position:fixed;
-    top:0;
-    left:0;
-    height:100vh;
+    top:10px;
+    right:10px;
+    border-radius:50%;
+    overflow:hidden;
     width:50px;
-    background:#fff;
-    z-index:12;
+    background:#1b1b1b;
+    box-shadow:0 0 0 4px rgba(27,27,27,.1);
+    border:1px solid rgb(27,27,27);
+    z-index:13;
+    transition:all .3s;
+    &:hover {
+        box-shadow:0 0 0 8px rgba(27,27,27,.1);
+        transition:all .3s;
+    }
+    &:active {
+        background:transparent;
+        svg {
+            color:rgb(27,27,27);
+        }
+    }
 
     display:none;
     .toggle-menu {
@@ -13,14 +27,19 @@
         height: 50px;
         position: relative;
         transition: .5s ease-in-out;
-        background:#1b1b1b;
         cursor: pointer;
         border:none;
         display:flex;
         align-items:center;
         justify-content: center;
+        background:transparent;
         &:focus {
             outline:none;
+        }
+        svg {
+            width:20px;
+            height:20px;
+            color:#fff;
         }
     }
     .burger {
@@ -96,7 +115,7 @@
     right:0;
     bottom:0;
     background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4));
-    z-index:10;
+    z-index:7;
 }
 
 .header {
@@ -108,7 +127,8 @@
     padding: 10px 0 0;
     background-color: #fff;
     overflow: auto;
-    z-index: 11;
+    z-index: 8;
+    border-right:10px solid $main-bg;
     transition:all .3s;
 }
 .header-content {
@@ -133,11 +153,29 @@
         display:none;
     }
 }
+.header-top  {
+    flex-grow:1;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+}
 .header-title {
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
     position: relative;
     z-index: 1;
     margin: 20px 20px 10px;
     text-align: center;
+    img {
+        max-width:80%;
+        margin:0 auto;
+        &:nth-child(2) {
+            max-width:80%;
+            margin-top:20px;
+        }
+    }
     a {
         display: flex;
         justify-content: center;
@@ -173,47 +211,48 @@
     display: block;
     position: relative;
     padding: 25px 0;
+    flex-grow:1;
 }
 .header-nav-item {
     display: block;
     position: relative;
-    padding: 0 15px;
     text-align: center;
+    &:not(:first-child) {
+        .header-nav-link.router-link-exact-active {
+            // color: $primary;
+            border-right-color:$primary;
+        }
+    }
 }
 .header-nav-link {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
     font-style: normal;
     line-height: 1.85em;
     color: #333333;
 
     display: flex;
     align-items:center;
-    justify-content: flex-start;
+    justify-content: center;
     position: relative;
     padding: 10px 20px;
     text-align: center;
-    border-right:2px solid transparent;
+    border-right:3px solid transparent;
     border-bottom: 1px solid #eee;
     outline: none;
     transition:all .3s;
-    transform:translateX(0);
     &:hover {
         text-decoration:none;
+        background:$main-bg;
     }
-    &:hover:not(.router-link-exact-active) {
-        color:$primary;
+    &:hover:not(.router-link-active) {
         transition:all .3s;
-        transform:translateX(10px);
         .icon-wrapper {
             svg {
                 color:$primary;
             }
         }
     } 
-    &:focus {
-        color:$primary;
-    }
     .icon-wrapper {
         width: 30px;
         height:30px;
@@ -228,20 +267,12 @@
             color:#353535;
         }
     }
-    &.router-link-exact-active {
-        color:$primary;
-        .icon-wrapper {
-            svg {
-                color:$primary;
-            }
-        }
-    }
 }
 .social-links {
     display: block;
     position: relative;
     list-style: none;
-    margin: 0 15px;
+    // margin: 0 15px;
     padding: 0;
     text-align: center;
 }
@@ -268,16 +299,16 @@
 }
 .copyright-block {
     width: 100%;
-    margin-bottom:10px;
     padding: 5px 10px;
+    padding-top:15px;
+    padding-bottom: 10px;
     line-height: 14px;
     font-size: 12px;
     text-align: center;
     color: #aeaeae;
 
-    margin-top:25px;
+    margin-top:10px;
     border-top:1px solid #ddd;
-    padding-top:35px;
 }
 
 
@@ -285,7 +316,7 @@
     .mobile-header {
         display:block;
         &.open + .header {
-            left:50px;
+            left:0;
             transition:all .3s;
         }
         &.open ~ .backdrop {
@@ -295,10 +326,17 @@
         }
     }
     .header {
-        left:-200px;
+        left:-$header_width;
         transition:all .3s;
     }
     .main {
-        margin-left: 50px;
+        margin-left: 0;
+    }
+}
+@media screen and (max-width:768px) {
+    .mobile-header {
+        &.open + .header {
+            width:100%;
+        }
     }
 }

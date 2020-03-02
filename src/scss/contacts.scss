@@ -1,122 +1,96 @@
-#map {
-    width:100%;
-    height:300px;
-    z-index:5;
-    margin-bottom: 35px;
-}
-.contact-form {
-    padding:35px;
-    background:#1b1b1b;
-    h3 {
-        font-size:12px;
-        font-weight:700;
-        text-transform: uppercase;
-        color:#939393;
-        text-align:center;
-        margin-bottom:5px;
-    }
-    p {
-        color:#fff;
-        font-size:17px;
-        font-weight:700;
-        max-width:450px;
-        margin:0 auto;
-        margin-bottom: 25px;
-        text-align:center;
-        line-height: 1.2;
-    }
-    .form {
-        text-align:center;
-        .form-control {
-            border-radius:0;
-            border-color:#363636;
-            background:transparent;
-            margin-bottom:20px;
-            color:#fff;
-            &:focus {
-                border-color:#585858;
-            }
-            &::placeholder {
-                font-size:13px;
-                color:#585858;
-            }
-        }
-        textarea.form-control {
-            overflow-y:auto !important;
-        }
-    }
-    .default-btn {
-        background:#fff;
-        border-color:#fff;
-        color:#232323;
-        margin-bottom:0;
-        &:hover {
-            color:#fff;
-            background:transparent;
-            border-color:#fff;
-        }
-    }
+.contact {
+    padding: 30px 0;
 }
 .contact-info {
-    height:100%;
+    margin-bottom: 80px;
 }
-.contact-list {
-    height:100%;
-    display:flex;
-    flex-wrap:wrap;
-    align-items:stretch;
-}
-.contact-item-wrapper {
-    width:50%;
-    height:50%;
-    background:#fafafa;
-    padding:35px 0;
-    display:flex;
-    align-items:center;
+.contact-info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    &:nth-child(3n+1) {
-        background:#f2f2f2;
-    }
-    svg {
-        width:30px;
-        height:30px;
-        fill:$primary;
-        margin-bottom:20px;
-    }
+}
+.contact-icon {
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    border-radius: 50%;
+    border: 1px solid $primary;
+    background: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
     img {
-        width:30px;
-        height:30px;
-        margin-bottom:20px;
-    }
-    h4 {
-        color:#1b1b1b;
-        text-transform: uppercase;
-        font-size:13px;
-        font-weight: 600;
-    }
-    span {
-        word-break: break-all;
-        font-size:14px;
-        color:#6f6f6f;
+        max-width: 80%;
+        height: auto; 
     }
 }
-.contact-item {
-    text-align:center;
+.contact-caption {
+    margin-bottom: 10px;
+    h3 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 700;
+    }
+}
+.contact-form {
+    padding: 0 30px;
+    p {
+        text-align: center;
+        font-weight: 500;
+    }
+    form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    input,textarea {
+        width: 100%;
+        margin-bottom: 20px;
+        border-radius: 0;
+        border-color: #eee;
+        background: #fbfbfb;
+        overflow: auto;
+    }
+    button {
+        margin: 0;
+    }
+}
+#map {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    z-index: 5;
+    margin-bottom: 35px;
 }
 
-
-@media screen and (max-width:500px) {
-    .contact-form {
-        p {
-            font-size:14px;
+@media screen and (max-width: 991px) {
+    #map {
+        margin-bottom: 0;
+    }
+    .contact-info {
+        .row {
+            .col-lg-4 {
+                &:first-child {
+                    .contact-info-item {
+                        padding-top: 0;
+                    }
+                }
+                &:last-child {
+                    .contact-info-item {
+                        padding-bottom: 0;
+                    }
+                }
+                
+            }
         }
     }
-    .contact-list {
-        flex-direction: column;
-        flex-wrap:nowrap;
-        align-items:center;
+    .contact-info-item {
+        padding: 20px 0;
     }
-    .contact-item-wrapper {
-        width:100%;
+    .contact-form {
+        padding-bottom: 40px;
     }
 }

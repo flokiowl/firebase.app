@@ -1,9 +1,10 @@
 <template>
 	<div class="login site-page">
-		<div class="site-page-title">
+		<!-- <div class="site-page-title">
 			<h2 class="page-title">Вход</h2>
 			<h5 class="page-description">Войдите в свой аккаунт</h5>
-		</div>
+		</div> -->
+		<router-link to="/">Главная</router-link>
 		<div class="login-content">
 			<span class="bg"></span>
 			<div class="login-icon">
@@ -41,8 +42,7 @@
 						@click="onSubmit" 
 						:loading="loading"
 					>
-						<b-spinner v-if="loading" small label="Загрузка"></b-spinner>
-						<span v-else>Войти</span>
+						<span>Войти</span>
 					</button>
 				</div>
 			</b-form>
@@ -52,6 +52,14 @@
 
 <script>
 export default {
+	metaInfo: {
+		title: 'Авторизация',
+		titleTemplate: '%s | Andrew Golub personal website',
+		htmlAttrs: {
+			lang: 'ru',
+			amp: true
+		}
+    },
 	data() {
 		return {
 			email:'',
@@ -71,7 +79,7 @@ export default {
 			}
 			this.$store.dispatch('loginUser', user)
 				.then(() => {
-					this.$router.push('/profile')
+					this.$router.push('/admin')
 				})
 				.catch(() => {})
 		}

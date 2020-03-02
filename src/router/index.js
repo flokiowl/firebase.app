@@ -7,11 +7,8 @@ Vue.use(VueRouter)
 const routes = [
 	{
 		path: '/',
-		name: 'about',
-		// route level code-splitting
-		// this generates a separate chunk (about.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
-		component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+		name: 'home',
+		component: () => import('../views/Home.vue')
 	},
 	{
 		path: '/resume',
@@ -50,10 +47,15 @@ const routes = [
 	// 	component: () => import('../views/Registration.vue')
 	// },
 	{
-		path: '/profile',
-		name: 'profile',
-		component: () => import('../views/Profile.vue'),
+		path: '/admin',
+		name: 'admin',
+		component: () => import('../views/Admin.vue'),
 		beforeEnter: AuthGuard
+	},
+	{
+		path: '*',
+		name: '404',
+		component: () => import('../components/404.vue')
 	}
 ]
 

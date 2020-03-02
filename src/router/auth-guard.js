@@ -2,8 +2,8 @@ import store from '@/store/index.js'
 
 export default function (to, from, next) {
     if (store.getters.user) {
-        next()
+        return next()
     } else {
-        next('/login?loginError=true')
+        return next('/login?loginError=true')
     }
 }

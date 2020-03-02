@@ -1,7 +1,9 @@
-import * as fb from 'firebase'
+import fb from 'firebase/app'
+import 'firebase/database'
+import 'firebase/storage'
 
 class Work {
-    constructor (name, description, type, date, repository, link, tags = [], id = null, imageSrc = '') {
+    constructor (name, description, type, date, repository, link, tags = [], id = null, imageSrc = []) {
         this.name = name,
         this.description = description,
         this.type = type,
@@ -24,13 +26,26 @@ export default {
         },
         loadWorks (state, payload) {
             state.works = payload
+        },
+        updateWork (state, {id,name,description,type,imageSrc,tags,date,repository,link}) {
+            const work = state.works.find(a => {
+                return a.id === id
+            })
+            work.name = name;
+            work.description = description;
+            work.type = type;
+            work.imageSrc = imageSrc;
+            work.tags = tags;
+            work.date = date;
+            work.repository = repository;
+            work.link = link;
         }
     },
     actions: {
         async createWork ({commit}, payload) {
             commit('clearError')
             commit('setLoading', true)
-            let imageSrc
+            let imageSrc = [];
             let key
             try {
                 const newWork =  new Work (
@@ -41,7 +56,8 @@ export default {
                     payload.repository,
                     payload.link,
                     payload.tags,
-                    ''
+                    key,
+                    imageSrc
                 )
                 await fb.database().ref('works').push(newWork)
                 .then((data) => {
@@ -49,28 +65,29 @@ export default {
                     return key
                 })
                 .then(key => {
-                    const filename = payload.image.name
-                    const ext = filename.slice(filename.lastIndexOf('.'))
-                    return fb.storage().ref('works/' + key + '.' + ext).put(payload.image)
-                })
-                .then(snapshot => {
-                    return new Promise((resolve) => {
-                        snapshot.ref.getDownloadURL().then(url => {
-                            snapshot.downloadURL = url
-                            resolve(snapshot)
+                    payload.image.forEach((item,index) => {
+                        let ext = item.name.slice(item.name.lastIndexOf('.'));
+                        let itemRef = fb.storage().ref(`works/${key}/${index}${ext}`);
+                        
+                        itemRef.put(item).then(() => {
+                            itemRef.getDownloadURL().then(url => {
+                                imageSrc.push(url)
+                                
+                            })
+                            .then(() => {
+                                fb.database().ref('works').child(key).update({imageSrc: imageSrc})
+                            })
                         })
                     })
-                })
-                .then((snapshot) => {
-                    imageSrc = snapshot.downloadURL
-                    return fb.database().ref('works').child(key).update({imageSrc: imageSrc})
+                    
                 })
                 .then(() => {
                     commit('setLoading', false)
                     commit('createWork', {
                         ...newWork,
-                        imageSrc: imageSrc,
-                        id: key
+                        id: key,
+                        imageSrc: imageSrc
+                        
                     })
                 })
             } catch (error) {
@@ -109,6 +126,19 @@ export default {
             } catch (error) {
                 commit('setError', error.message)
                 commit('setLoading', false)
+            }
+        },
+        async updateWork ({commit}, {id,name,description,type,imageSrc,tags,date,repository,link}) {
+            commit('clearError')
+            commit('setLoading', true)
+            try {
+                await fb.database().ref('works').child(id).update({name,description,type,imageSrc,tags,date,repository,link})
+                commit('updateWork', {id,name,description,type,imageSrc,tags,date,repository,link})
+                commit('setLoading', false)
+            } catch (error) {
+                commit('setError', error.message)
+                commit('setLoading', false)
+                throw error
             }
         }
     },

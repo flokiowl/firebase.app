@@ -1,5 +1,5 @@
 <template>
-    <b-modal @show="resetModal" id="modalNewWork" size="xl" title="Добавить работу в портфолио">
+    <b-modal @show="loadWork" :id="work.id" size="xl" title="Редактировать работу">
         <form ref="form" style="display:flex;flex-wrap:wrap;">
             <b-form-group
                 label="Название"
@@ -27,23 +27,40 @@
                 ></b-form-textarea>
             </b-form-group>
             <b-form-group
+                label="Тип"
                 invalid-feedback="Выберите тип работы"
-                class="modal-work-type w-100 p-2"
+                class="modal-work-type w-50 p-2"
             >
                 <b-form-radio name="type-radio" v-model="type" value="HTML">Верстка</b-form-radio>
                 <b-form-radio name="type-radio" v-model="type" value="VueJS">VueJS</b-form-radio>
                 <b-form-radio name="type-radio" v-model="type" value="Layout">Макеты</b-form-radio>
             </b-form-group>
-            <b-form-group class="modal-work-tech w-100">
-                <tags-input element-id="tags"
-                    v-model="tags"
-                    placeholder="Технология"
-                    :typeahead="true"></tags-input>
-            </b-form-group> 
+            <b-form-group
+                label-for="file-small"
+                label-cols-sm="2" 
+                label-size="sm"
+                invalid-feedback="Нету изображения"
+                class="w-50 p-2"
+            >
+                <b-form-file
+                    size="sm"
+                    placeholder="Выберите файл..."
+                    drop-placeholder="Drop file here..."
+                    
+                    multiple 
+                ></b-form-file>
+                <div class="selected-images">
+                    <img v-for="img in imageSrc" :key="img" :src="img" alt="">
+                </div>
+            </b-form-group>
+            <tags-input element-id="tags"
+                v-model="tags"
+                placeholder="Технология"
+                :typeahead="true"></tags-input>
             <b-form-group
                 label="Репозиторий"
                 label-for="repository-input"
-                class="w-100 p-2"
+                class="w-50 p-2"
             >
                 <b-form-input
                     id="repository-input"
@@ -54,7 +71,7 @@
             <b-form-group
                 label="Внешняя ссылка"
                 label-for="link-input"
-                class="w-100 p-2"
+                class="w-50 p-2"
             >
                 <b-form-input
                     id="link-input"
@@ -66,7 +83,7 @@
                 label="Дата"
                 label-for="date-input"
                 invalid-feedback="Дата - обязательное поле"
-                class="w-100 p-2"
+                class="w-50 p-2"
             >
                 <b-form-input
                     id="date-input"
@@ -74,40 +91,23 @@
                     v-model="date"
                 ></b-form-input>
             </b-form-group>
-            <b-form-group
-                label="Загрузить"
-                label-for="file-small"
-                label-cols-sm="2" 
-                label-size="sm"
-                invalid-feedback="Нету изображения"
-                class="w-100 p-2"
-            >
-                <b-form-file
-                    size="sm"
-                    placeholder="Выберите файл..."
-                    drop-placeholder="Drop file here..."
-                    @change="onFileChange"
-                    multiple 
-                ></b-form-file>
-                <div class="selected-images">
-                    <img v-for="img in imageSrc" :key="img" :src="img" alt="">
-                </div>
-            </b-form-group>
         </form>
         <template v-slot:modal-footer="{ cancel }">
-            <b-button size="sm" variant="success" @click="createWork">
-                Добавить
+            <b-button size="sm" variant="success" @click="onSave">
+                Обновить
             </b-button>
             <b-button size="sm" variant="danger" @click="cancel()">
                 Отмена
             </b-button>
         </template>
     </b-modal>
-</template>
+</template>    
 
 <script>
 import VoerroTagsInput from '@voerro/vue-tagsinput';
+
 export default {
+    props: [ 'work' ],
     components: { "tags-input": VoerroTagsInput },
     data () {
         return {
@@ -123,58 +123,34 @@ export default {
             link:''
         }
     },
-    computed: {
-        loading () {
-            return this.$store.getters.loading
-        }
-    },
-    methods: {
-        createWork () {
-            // this.id = (+new Date)
-            const work = {
+    methods:{
+        loadWork () {
+            this.id = this.work.id,
+            this.name = this.work.name,
+            this.description = this.work.description,
+            this.type = this.work.type,
+            this.imageSrc = this.work.imageSrc,
+            this.tags = this.work.tags,
+            this.date = this.work.date,
+            this.repository = this.work.repository,
+            this.link = this.work.link
+        },
+        onSave () {
+            const updatedWork = {
                 id:this.id,
                 name:this.name,
                 description:this.description,
                 type:this.type,
-                imageSrc:this.imageSrc,
-                image:this.image,
+                imageSrc: this.imageSrc,
                 tags:this.tags,
                 date:this.date,
-                repository:this.repository,
-                link:this.link,
+                repository: this.repository,
+                link: this.link,
             }
-            this.$store.dispatch('createWork', work)
-                .then(() => this.$bvModal.hide('modalNewWork'))
+            this.$store.dispatch('updateWork', updatedWork)
+                .then(() => this.$bvModal.hide(this.work.id))
                 .catch(() => {})
-        },
-        resetModal () {
-            this.id = null,
-            this.name = '',
-            this.description = '',
-            this.type = '',
-            this.imageSrc = [],
-            this.image = [],
-            this.tags = [],
-            this.date = '',
-            this.repository = '',
-            this.link = ''
-        },
-        onFileChange (e) {
-            const files = e.target.files
-            files.forEach((item,index) => {
-                let reader = new FileReader()
-                reader.onload = item => {
-                    this.imageSrc.push(reader.result) 
-                } 
-                
-                reader.readAsDataURL(item)
-                this.image.push(item)
-            })
         }
     }
 }
-</script>
-
-<style>
-
-</style>
+</script>  
