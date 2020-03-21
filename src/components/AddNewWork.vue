@@ -166,7 +166,6 @@ export default {
                 reader.onload = item => {
                     this.imageSrc.push(reader.result) 
                 } 
-                
                 reader.readAsDataURL(item)
                 this.image.push(item)
             })

@@ -43,17 +43,18 @@
 						v-for="work in filteredWorks.reverse()" 
 						:key="work.id"
 					>
-							<div class="image-block">
-								<b-img-lazy fluid :src="work.imageSrc[0]" :alt="work.name"></b-img-lazy>
+						<div class="image-block">
+							<!-- <b-img-lazy fluid :src="work.imageSrc[0]" :alt="work.name"></b-img-lazy> -->
+							<img :src="work.imageSrc[0]" :alt="work.name" />
+						</div>
+						<div class="hover-block">
+							<div class="hover-inner">
+								<h3>{{work.name}}</h3>
+								<p>
+									<span>{{work.date}}</span>
+								</p>
 							</div>
-							<div class="hover-block">
-								<div class="hover-inner">
-									<h3>{{work.name}}</h3>
-									<p>
-										<span>{{work.date}}</span>
-									</p>
-								</div>
-							</div>
+						</div>
 					</router-link>	
 				</transition-group>
 				<div class="loading" v-else>
